@@ -65,6 +65,106 @@ class _PlayMusicScreenState extends State<PlayMusicScreen>
           onPressed: widget.logic.onExpand,
           icon: const Icon(Icons.arrow_back_ios_rounded),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Tắt nhạc sau',
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        InkWell(
+                          onTap: () {
+                            widget.logic.onSelecteTime(10);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.grey.shade300),
+                            width: double.infinity,
+                            child: Text(
+                              '10 Phút',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        InkWell(
+                          onTap: () {
+                            widget.logic.onSelecteTime(15);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.grey.shade300),
+                            width: double.infinity,
+                            child: Text(
+                              '15 Phút',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        InkWell(
+                          onTap: () {
+                            widget.logic.onSelecteTime(30);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.grey.shade300),
+                            width: double.infinity,
+                            child: Text(
+                              '30 Phút',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        InkWell(
+                          onTap: () {
+                            widget.logic.onSelecteTime(60);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.grey.shade300),
+                            width: double.infinity,
+                            child: Text(
+                              '1 Giờ',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.timer_outlined))
+        ],
         title: Text(widget.song.title!),
       ),
       body: ChangeNotifierProvider.value(
@@ -135,6 +235,7 @@ class _PlayMusicScreenState extends State<PlayMusicScreen>
                                   widget.song.artists
                                       .map((e) => e.name)
                                       .join(', '),
+                                  textAlign: TextAlign.center,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
@@ -225,7 +326,6 @@ class _PlayMusicScreenState extends State<PlayMusicScreen>
                                   }
                                 }
                               : null,
-                          
                           child: const Icon(
                             FontAwesomeIcons.forwardStep,
                             size: 30,

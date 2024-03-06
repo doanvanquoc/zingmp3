@@ -41,6 +41,33 @@ class HomeLogic with ChangeNotifier {
   String lyricString = '';
   LyricsReaderModel? lyricModel;
   int playProgress = 0;
+  Timer? timer;
+  int? selectedTime;
+
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    timer?.cancel();
+    super.dispose();
+  }
+
+  void onSelecteTime(int time) {
+    selectedTime = time * 60;
+    startTimer();
+    notifyListeners();
+  }
+
+  void startTimer() {
+    if (selectedTime != null) {
+      timer?.cancel();
+      timer = Timer(Duration(seconds: selectedTime!), () {
+        isPlaying = false;
+        audioPlayer.pause();
+        notifyListeners();
+      });
+      notifyListeners();
+    }
+  }
 
   void resetPlaylist() {
     playlist = null;
@@ -98,7 +125,6 @@ class HomeLogic with ChangeNotifier {
   Future<bool> getMusicLink(String id) async {
     try {
       final res = await api.getMusicLink(id);
-      log('Get song link: $res');
       if (res['err'] != 0) {
         log('Lỗi get song link: ${res['msg']}');
         // ignore: use_build_context_synchronously
@@ -193,11 +219,9 @@ class HomeLogic with ChangeNotifier {
       isPlaying = true;
       audioPlayer.setAudioSource(audioSource);
       audioPlayer.processingStateStream.listen((processingState) {
-        log(processingState.toString());
         if (processingState == ProcessingState.completed) {
           audioPlayer.stop();
           audioPlayer.seek(Duration.zero);
-          log('co vao');
           isStop = true;
           isPlaying = false;
           notifyListeners();
@@ -211,9 +235,6 @@ class HomeLogic with ChangeNotifier {
       });
 
       audioPlayer.positionStream.listen((event) {
-        // position = event.inSeconds >= duration.inSeconds ? Duration.zero : event;
-        // isPlaying = event.inSeconds >= duration.inSeconds ? false : true;
-        // notifyListeners();
         position = event;
         playProgress = event.inMilliseconds;
         notifyListeners();
@@ -309,7 +330,6 @@ class HomeLogic with ChangeNotifier {
   }
 
   void onNext(List<Song> songs) async {
-    log('dau block');
     onBlock();
     songs = songs.where((element) => element.isWorldWide).toList();
     if (songs.indexOf(selectedSong!) == songs.length - 1) {

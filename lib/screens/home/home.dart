@@ -1,5 +1,5 @@
+import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:app_nghe_nhac/app/const.dart';
 import 'package:app_nghe_nhac/app/ultils.dart';
@@ -8,7 +8,6 @@ import 'package:app_nghe_nhac/models/banner.dart';
 import 'package:app_nghe_nhac/models/home.dart';
 import 'package:app_nghe_nhac/models/lyric.dart';
 import 'package:app_nghe_nhac/models/playlist.dart';
-import 'package:app_nghe_nhac/models/sentence.dart';
 import 'package:app_nghe_nhac/models/song.dart';
 import 'package:app_nghe_nhac/models/top100_response.dart';
 import 'package:app_nghe_nhac/screens/home/widgets/banner_item.dart';
@@ -83,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Khám pházzzz',
+                                  'Khám phá',
                                   style: Theme.of(context)
                                       .textTheme
                                       .headlineMedium,
@@ -143,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(height: 20),
                             HomeItem(
-                              title: 'Chủ đề & thể loại',
+                              title: 'Chủ đề & Thể loại',
                               child: SizedBox(
                                 height: 80,
                                 child: ListView(
